@@ -1,0 +1,9 @@
+matplotlib
+numpy
+sympy
+casadi
+pydot
+pylint
+jupyterlab
+simpy
+control
