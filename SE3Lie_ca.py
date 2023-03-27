@@ -144,29 +144,6 @@ class se3: #se3 Lie Algebra Functions
         
         return ca.vertcat(horz, lastRow)
     
-    # @classmethod
-    # def exp_Ad(cls, v): #accepts adjoint matrix and perform Exponential map on adjoint matrix of se(3) lie algebra
-    #     R = v[:3,:3]
-    #     t = v[:3,3:]
-    #     theta = ca.norm_2(so3.vee(R)) #theta term using norm for sqrt(theta1**2+theta2**2+theta3**2)
-        
-    #     # translational components u
-    #     u = ca.SX(3, 1)
-    #     u[0] = t[2,1]
-    #     u[1] = t[0,2]
-    #     u[2] = t[1,0]
-
-    #     R_exp = so3.Dcm.exp(so3_vee(R)) #'Dcm' for direction cosine matrix representation of so3 LieGroup Rotational
-    #     # V = ca.SX.eye(3) + cls.C2(theta)*R + cls.C4(theta)*ca.mtimes(R, R)
-    #     a = R/theta
-    #     J = ca.sin(theta)/theta*ca.SX_eye(3) + (1- (ca.sin(theta)/theta))*a@ca.transpose(a)+ ((1-ca.cos(theta))/theta)*so3_wedge(a)
-
-    #     horz = ca.horzcat(R_exp, so3_wedge(J@u)@R_exp)#so3_wedge(so3.Dcm.exp(u))@R_exp)
-
-    #     zeros3 = ca.SX.zeros(3,3)
-    #     lastRow = ca.horzcat(zeros3,R_exp)
-        
-    #     return ca.vertcat(horz, lastRow)
     @classmethod
     def exp_Ad(cls, ad): #accepts adjoint matrix se(3) lie algebra
         R = ad[:3,:3]
@@ -253,12 +230,7 @@ class SE3:
         '''
         Representation Matrix for SE(3) Lie Group 3D Rigid transformation
         '''
-        # theta = G[:3,:3]
-        # theta_norm = ca.norm_2(so3.vee(theta))
-        # a = theta/theta_norm
-        # R = ca.cos(theta_norm)@ca.SX_eye(3) + (1 - ca.cos(theta_norm))@a@ca.transpose(a) + ca.sin(theta_norm)@se3.wedge(a)
-        # J = ca.sin(theta_norm)/theta_norm*ca.SX_eye(3) + (1- (ca.sin(theta_norm)/theta_norm))*a@ca.transpose(a)+ ((1-ca.cos(theta_norm))/theta_norm)*se3.wedge(a)
-        
+      
         R = G[:3,:3]
         
         # t is translational component vector
@@ -281,29 +253,6 @@ class SE3:
         zeros3 = ca.SX.zeros(3,3)
         second = ca.horzcat(zeros3,R)
         return ca.vertcat(first, second)
-    # @classmethod
-    # def Ad(cls, G): #accepts adjoint matrix and perform Exponential map on adjoint matrix of se(3) lie algebra
-    #     R = G[:3,:3]
-    #     t = G[:3,3]
-    #     theta = ca.norm_2(so3.vee(R)) #theta term using norm for sqrt(theta1**2+theta2**2+theta3**2)
-        
-    #     # translational components u
-    #     u = ca.SX(3, 1)
-    #     u[0] = t[0]
-    #     u[1] = t[1]
-    #     u[2] = t[2]
-
-    #     R_exp = so3.Dcm.exp(so3_vee(R)) #'Dcm' for direction cosine matrix representation of so3 LieGroup Rotational
-    #     a = R/theta
-    #     J = ca.sin(theta)/theta*ca.SX_eye(3) + (1- (ca.sin(theta)/theta))*a@ca.transpose(a)+ ((1-ca.cos(theta))/theta)*so3_wedge(a)
-
-    #     horz = ca.horzcat(R_exp, so3_wedge(J@u)@R_exp)#so3_wedge(so3.Dcm.exp(u))@R_exp)
-
-    #     zeros3 = ca.SX.zeros(3,3)
-    #     lastRow = ca.horzcat(zeros3,R_exp)
-        
-    #     return ca.vertcat(horz, lastRow)
-
 
 def dot_plot_draw(u, **kwargs):
     F = ca.sparsify(u)
