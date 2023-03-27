@@ -128,7 +128,7 @@ class SO2:
 def dot_plot_draw(u, **kwargs):
     F = ca.sparsify(u)
 
-    output_dir = '/home/wsribunm/Documents/GitHub/aae590-LieGroups-personal' #change directory if needed
+    output_dir = '/home/wsribunm/Documents/GitHub/aae590-LieGroups-personal/fig' #change directory if needed
     os.makedirs(output_dir, exist_ok=True)
     g = graph.dotgraph(F)
     g.set('dpi', 180)
