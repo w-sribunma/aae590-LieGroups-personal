@@ -35,7 +35,7 @@ class Dcm:
     algebra_params = 3
 
     def __init__(self):
-        raise RuntimeError('this class is just for scoping, do not instantiate')
+        raise RuntimeError('this class is just scoping, do not instantiate')
 
     @classmethod
     def check_group_shape(cls, a):
