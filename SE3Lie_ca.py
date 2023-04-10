@@ -121,6 +121,13 @@ class se3: #se3 Lie Algebra Functions
         cls.check_group_shape(a)
         cls.check_group_shape(b)
         return ca.mtimes(a, b)
+    
+    @classmethod
+    def from_euler(cls, v): ##accepts euler vee operator [x,y,z,theta1, theta2, theta3]
+        w_so3 = v[3:6] #grab only rotation terms for so3
+        wx_so3 = so3.wedge(w_so3) #wedge operator for so3
+        last_row = ca.SX.zeros(1,4)
+        return ca.vertcat(ca.horzcat(wx_so3, v[:3]),last_row)
 
     @classmethod
     def exp(cls, v): #accept input in wedge operator form in se(3) lie algebra
@@ -246,12 +253,12 @@ class SE3:
         
     @classmethod
     def Ad(cls, G): #accepts elements of SE(3) Lie Group, big Ad
-        R = G[:3,:3]
+        C = G[:3,:3]
         t = so3_wedge(G[:3,3]) #t_x
-        txR = ca.mtimes(t,R) 
-        first = ca.horzcat(R,txR)
+        txR = t@C
+        first = ca.horzcat(C,txR)
         zeros3 = ca.SX.zeros(3,3)
-        second = ca.horzcat(zeros3,R)
+        second = ca.horzcat(zeros3,C)
         return ca.vertcat(first, second)
 
 def dot_plot_draw(u, **kwargs):
