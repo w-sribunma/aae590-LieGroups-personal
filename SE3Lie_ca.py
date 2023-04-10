@@ -145,7 +145,7 @@ class se3: #se3 Lie Algebra Functions
         # R = exp(so3_wedge(v_so3))
         R = so3.Dcm.exp(v_so3) #'Dcm' for direction cosine matrix representation of so3 LieGroup Rotational
         V = ca.SX.eye(3) + cls.C2(theta)*X_so3 + cls.C4(theta)*ca.mtimes(X_so3, X_so3)
-        horz = ca.horzcat(R, ca.mtimes(V,u))
+        horz = ca.horzcat(R, V@u)
         
         lastRow = ca.transpose((ca.SX([0,0,0,1])))
         
@@ -227,7 +227,7 @@ class SE3:
         t[1] = G[1, 3]
         t[2] = G[2, 3]
         
-        uInv = ca.mtimes(V_inv, t) 
+        uInv = V_inv@t
         horz2 = ca.horzcat(wSkew, uInv)
         lastRow2 = ca.transpose((ca.SX([0,0,0,0])))
         return ca.vertcat(horz2, lastRow2)
